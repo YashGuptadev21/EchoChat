@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const messageSchema = new Schema({
-  content: String,
+const messageSchema = new mongoose.Schema({
+  content: { type: String },
   attachments: [
     {
       public_id: {
@@ -26,6 +26,6 @@ const messageSchema = new Schema({
   },
 });
 
-const Message = mongoose.Model("Message", messageSchema);
+const Message = mongoose.model("Message", messageSchema);
 
 module.exports = Message;

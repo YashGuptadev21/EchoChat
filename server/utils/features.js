@@ -1,15 +1,17 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
-const connectDb = (uri) => {
-  mongoose
-    .connect(uri, {
+const connectDb = async (uri) => {
+  try {
+    const connection = await mongoose.connect(uri, {
       dbName: "EchoChat",
-    })
-    .then((data) => console.log(`Connected to DB: ${data.connection.host}`))
-    .catch((err) => {
-      throw err;
     });
+
+    console.log(`Connected to MongoDb :${connection.connection.host}`);
+  } catch (err) {
+    console.error("Failed to connect to MongoDb:", err.message);
+    process.exit(1);
+  }
 };
 
 const sendToken = (res, user, code, message) => {
@@ -26,11 +28,19 @@ const sendToken = (res, user, code, message) => {
     success: true,
     token,
     message,
-    user,
+    user:{
+      _id : user._id,
+      username : user.username,
+    },
   });
+};
+
+const emitEvent = (req, event, users, data) => {
+  console.log("Event Emmitted");
 };
 
 module.exports = {
   sendToken,
   connectDb,
+  emitEvent,
 };

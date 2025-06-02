@@ -6,6 +6,7 @@ const errorMiddleware = require("./middlewares/error");
 const morgan = require("morgan");
 const userRoute = require("./routes/user");
 const chatRoute = require("./routes/chat");
+const  createUser= require("./seeders/user");
 const PORT = 3000;
 
 //Loading Environment Variables
@@ -16,6 +17,7 @@ dotenv.config({
 //MongoDb connection
 const mongoURI = process.env.MONGO_DB_URI;
 connectDb(mongoURI);
+
 
 const app = express();
 
